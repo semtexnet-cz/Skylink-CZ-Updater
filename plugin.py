@@ -120,8 +120,8 @@ class PiconUpdater(Screen):
 
     def updateUI(self):
         self["status"].setText("Kontrola verzí dokončena.")
-        self["localver"].setText(f"Picony - nainstalovaná verze: {self.local_picon_version}")
-        self["remotever"].setText(f"Picony - dostupná verze: {self.remote_picon_version}")
+        self["localver"].setText(f"Programy - nainstalovaná verze: {self.local_picon_version}")
+        self["remotever"].setText(f"Programy - dostupná verze: {self.remote_picon_version}")
         self["localpluginver"].setText(f"Plugin - nainstalovaná verze: {self.local_plugin_version}")
         self["remotepluginver"].setText(f"Plugin - dostupná verze: {self.remote_plugin_version}")
 
@@ -130,14 +130,14 @@ class PiconUpdater(Screen):
     # =========================
     def updatePicons(self, callback=None):
         if "Chyba" in self.remote_picon_version:
-            self.session.open(MessageBox, "Nepodařilo se získat vzdálenou verzi picon!", MessageBox.TYPE_ERROR, timeout=5)
+            self.session.open(MessageBox, "Nepodařilo se získat vzdálenou verzi programů!", MessageBox.TYPE_ERROR, timeout=5)
             return
 
         if self.local_picon_version == self.remote_picon_version:
             if callback:
                 callback()
             else:
-                self.session.open(MessageBox, "Picony jsou aktuální, není co aktualizovat.", MessageBox.TYPE_INFO, timeout=5)
+                self.session.open(MessageBox, "Programy jsou aktuální, není co aktualizovat.", MessageBox.TYPE_INFO, timeout=5)
             return
 
         try:
@@ -166,7 +166,7 @@ class PiconUpdater(Screen):
                 callback()
             else:
                 self.session.openWithCallback(self.restartEnigma, MessageBox,
-                    "Programy a picony byly úspěšně aktualizovány!\n\nEnigma2 bude nyní restartována.",
+                    "Programy byly úspěšně aktualizovány!\n\nEnigma2 bude nyní restartována.",
                     MessageBox.TYPE_INFO, timeout=5)
 
         except Exception as e:
@@ -228,7 +228,7 @@ class PiconUpdater(Screen):
 
         def afterAll():
             self.session.openWithCallback(self.restartEnigma, MessageBox,
-                "Picony, programy a plugin byly úspěšně aktualizovány!\n\nEnigma2 bude nyní restartována.",
+                "Programy a plugin byly úspěšně aktualizovány!\n\nEnigma2 bude nyní restartována.",
                 MessageBox.TYPE_INFO, timeout=5)
 
         self.updatePicons(callback=lambda: self.updatePlugin(callback=afterAll))
